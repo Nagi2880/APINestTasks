@@ -13,21 +13,21 @@ export class TasksService {
   async createTask(createTaskDto: TaskDto): Promise<Task> {
     const { title, description } = createTaskDto;
 
-    // Crear una nueva instancia de Task con los datos del DTO
+    // Create a new instance of Task with the data from the DTO
     const task = new this.taskModel();
     task.title = title;
     task.description = description;
 
-    // Asignar el status inicial y la fecha de creación
+    // give the initial status and the creation date
     task.status = TaskStatus.PENDING;
     task.creationdate = new Date();
 
-    // Guardar la tarea en la base de datos
+    // Save the task in the data base
     await task.save();
 
     return task;
   }
-
+    // GetAllTaks Route
   async getAllTasks(): Promise<Task[]>{
       return this.taskModel.find().exec();
   }
