@@ -15,11 +15,7 @@ export class TasksController {
 
   @Post()
   async CreateTask(@BodyDecorator() createTaskDto: TaskDto): Promise<Task>{
-    return this.tasksService.createTask(createTaskDto);
+    return this.tasksService.CreateTask(createTaskDto);
   }
 
-  @Put()
-  async EditTask(){
-    
-  }
 }

@@ -16,6 +16,9 @@ export class Task {
 
   @Prop()
   creationdate: Date;
+
+  @Prop()
+  uuid: String;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);
