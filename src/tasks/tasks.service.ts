@@ -33,7 +33,32 @@ export class TasksService {
   }
   
     // GetAllTaks Route
-  async getAllTasks(): Promise<Task[]>{
+  async GetAllTasks(): Promise<Task[]>{
       return this.taskModel.find().exec();
+  }
+
+  // Delete Route by uuid
+  async DeleteTask(taskUuid: string): Promise<any>{
+    try {
+      const deletedTask = await this.taskModel.findOneAndDelete({ uuid: taskUuid });
+      if (!deletedTask) {
+        throw new Error('No se encontró ninguna tarea con el UUID proporcionado');
+      }
+      return { message: 'Tarea eliminada exitosamente' };
+    } catch (error) {
+      throw new Error('Hubo un error al intentar eliminar la tarea');
+    }
+  }
+  // Delete Route using the title 
+  async deleteTaskByText(taskTitle: string): Promise<any> {
+    try {
+      const deletedTask = await this.taskModel.findOneAndDelete({ title: taskTitle });
+      if (!deletedTask) {
+        throw new Error('No se encontró ninguna tarea con el título proporcionado');
+      }
+      return { message: 'Tarea eliminada exitosamente' };
+    } catch (error) {
+      throw new Error('Hubo un error al intentar eliminar la tarea');
+    }
   }
 }
