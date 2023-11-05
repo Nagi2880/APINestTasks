@@ -69,7 +69,9 @@ export class TasksService {
         updateTaskDto, //update the task with the DTO data
         {new: true}
         );
+        console.log('La tarea fue modificada correctamente') //The task has been successfully  updated
         return updatedTask;
+        
       }catch(error){
         throw new Error('No se encontro la tarea con el uuid dado') // Task with that uuid not found
     }
