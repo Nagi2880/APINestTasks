@@ -11,3 +11,11 @@ export class TaskDto {
     @IsEnum(TaskStatus)
     status: TaskStatus;
 }
+export class UpdateTaskDto{
+    title?: string;
+    
+    description?: string;
+    
+    @IsEnum(TaskStatus)
+    status?: TaskStatus;
+}

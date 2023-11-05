@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import {Task} from './schemas/task.schema'
-import { TaskDto } from './dto/task.dto';
+import { TaskDto, UpdateTaskDto } from './dto/task.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { TaskStatus } from './taskstatus.enum';
 import { v4 as uuidv4 } from 'uuid';
@@ -59,6 +59,19 @@ export class TasksService {
       return { message: 'Tarea eliminada exitosamente' };
     } catch (error) {
       throw new Error('Hubo un error al intentar eliminar la tarea');
+    }
+  }
+  //Update Patch Route
+  async UpdateTask(taskuuid: string, updateTaskDto: UpdateTaskDto): Promise<any>{
+    try{
+      const updatedTask = await this.taskModel.findOneAndUpdate(
+        {uuid: taskuuid}, // Find the task by the uuid
+        updateTaskDto, //update the task with the DTO data
+        {new: true}
+        );
+        return updatedTask;
+      }catch(error){
+        throw new Error('No se encontro la tarea con el uuid dado') // Task with that uuid not found
     }
   }
 }
