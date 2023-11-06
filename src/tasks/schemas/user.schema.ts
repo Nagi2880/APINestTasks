@@ -20,3 +20,5 @@ export class User {
     @Prop({})
     uuid: String
 }
+
+export const UserSchema = SchemaFactory.createForClass(User)
