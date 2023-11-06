@@ -7,7 +7,7 @@ import { UserModule } from './user/user.module';
 
 
 @Module({
-  imports: [TasksModule, MongooseModule.forRoot('mongodb://localhost/nest'), UserModule],
+  imports: [UserModule,TasksModule, MongooseModule.forRoot('mongodb://localhost/nest')],
   controllers: [AppController],
   providers: [AppService],
 })

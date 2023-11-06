@@ -1,7 +1,7 @@
 import { Controller, Get, Post,Patch,Delete,Param } from '@nestjs/common';
 import { TasksService} from './tasks.service';
-import {Task} from './schemas/task.schema'
-import { TaskDto, UpdateTaskDto } from './dto/task.dto';
+import {Task} from '../schemas/task.schema'
+import { TaskDto, UpdateTaskDto } from '../dto/task.dto';
 import { Body as BodyDecorator } from '@nestjs/common';
 
 @Controller('tasks')
@@ -14,8 +14,12 @@ export class TasksController {
   }
 
   @Post()
-    async CreateTask(@BodyDecorator() createTaskDto: TaskDto): Promise<Task>{
-      return this.tasksService.CreateTask(createTaskDto);
+    async CreateTask(
+      @BodyDecorator() createTaskDto: TaskDto,
+      @BodyDecorator('userID') userId: string,
+      
+      ):Promise<Task>{
+      return this.tasksService.CreateTask(createTaskDto, userId);
   }
   @Delete(':uuid')
     async DeleteTask(@Param('uuid') uuid: string){

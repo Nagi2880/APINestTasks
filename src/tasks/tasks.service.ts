@@ -1,17 +1,27 @@
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import {Task} from './schemas/task.schema'
-import { TaskDto, UpdateTaskDto } from './dto/task.dto';
+import {Task, TaskDocument} from '../schemas/task.schema'
+import { TaskDto, UpdateTaskDto } from '../dto/task.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { TaskStatus } from './taskstatus.enum';
 import { v4 as uuidv4 } from 'uuid';
+import { User, UserDocument } from '../schemas/user.schema';
 
 @Injectable()
 export class TasksService {
-  constructor(@InjectModel(Task.name) private taskModel: Model<Task>){}
+  constructor(
+    @InjectModel(Task.name) private taskModel: Model<TaskDocument>,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    ){}
 
-  async CreateTask(createTaskDto: TaskDto): Promise<Task> {
+  async CreateTask(createTaskDto: TaskDto, userId: string): Promise<Task> {
     const { title, description } = createTaskDto;
+    
+    // Find the user in the database
+    const user = await this.userModel.findById(userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
 
     // Create a new instance of Task with the data from the DTO
     const task = new this.taskModel();
@@ -22,6 +32,9 @@ export class TasksService {
     task.status = TaskStatus.PENDING;
     task.creationdate = new Date();
     task.uuid = uuidv4() //Generate a UUID from the id 
+
+    // Assign the user to the task
+    task.user = user;
 
     // Save the task in the data base
     await task.save();
