@@ -13,9 +13,4 @@ export class UserDto {
   @IsEmail()
   readonly mail: string;
 
-  @IsNotEmpty()
-  readonly creationdate: Date;
-
-  @IsUUID()
-  readonly uuid: string;
 }

@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async createUser(UserDto: UserDto): Promise<User> {
+  async CreateUser(UserDto: UserDto): Promise<User> {
     const user = new this.userModel(UserDto);
     user.creationdate = new Date();
     user.uuid = uuidv4();
