@@ -20,7 +20,7 @@ export class TasksService {
     // Find the user in the database
     const user = await this.userModel.findById(userId);
     if (!user) {
-      throw new Error('User not found');
+      throw new Error('No se encontro el usuario');
     }
 
     // Create a new instance of Task with the data from the DTO
