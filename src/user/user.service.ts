@@ -9,10 +9,16 @@ import { v4 as uuidv4 } from 'uuid';
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
+    //Create and set the uuid and the creationdate of the user
   async CreateUser(UserDto: UserDto): Promise<User> {
     const user = new this.userModel(UserDto);
     user.creationdate = new Date();
     user.uuid = uuidv4();
     return user.save();
     }
+
+    //Get all users
+  async GetAllUsers():Promise<User[]>{
+    return this.userModel.find().exec();
+  }
 }

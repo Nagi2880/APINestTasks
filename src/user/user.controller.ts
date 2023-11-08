@@ -1,7 +1,8 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post, Get } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from '../dto/user.dto';
 import { Body as BodyDecorator } from '@nestjs/common';
+import { User } from 'src/schemas/user.schema';
 
 @Controller('user')
 export class UserController {
@@ -10,5 +11,9 @@ export class UserController {
   @Post()
   async CreateUser(@BodyDecorator() userDto: UserDto) {
     return this.userService.CreateUser(userDto);
+  }
+  @Get()
+  async GetAllUsers():Promise<User[]>{
+    return this.userService.GetAllUsers()
   }
 }

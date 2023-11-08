@@ -18,7 +18,7 @@ export class TasksService {
     const { title, description } = createTaskDto;
     
     // Find the user in the database
-    const user = await this.userModel.findById(userId);
+    const user = await this.userModel.findOne({ uuid: userId });
     if (!user) {
       throw new Error('No se encontro el usuario');
     }
@@ -46,8 +46,8 @@ export class TasksService {
   }
   
     // GetAllTaks Route
-  async GetAllTasks(): Promise<Task[]>{
-      return this.taskModel.find().exec();
+  async GetAllTasksByUser(userId: string): Promise<Task[]>{
+      return this.taskModel.find().populate('user','username uuid' ).exec();
   }
 
   // Delete Route by uuid

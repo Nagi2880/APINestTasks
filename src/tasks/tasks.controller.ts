@@ -4,19 +4,19 @@ import {Task} from '../schemas/task.schema'
 import { TaskDto, UpdateTaskDto } from '../dto/task.dto';
 import { Body as BodyDecorator } from '@nestjs/common';
 
-@Controller('tasks')
+@Controller('user/:uuid')
 export class TasksController {
   constructor(private tasksService: TasksService){}
   
-  @Get()
-    async GetAllTasks(): Promise<Task[]> {
-      return this.tasksService.GetAllTasks()
+  @Get('tasks')
+    async GetAllTasks(@Param('uuid') userId: string) {
+      return this.tasksService.GetAllTasksByUser(userId)
   }
 
-  @Post()
+  @Post('tasks')
     async CreateTask(
       @BodyDecorator() createTaskDto: TaskDto,
-      @BodyDecorator('userID') userId: string,
+      @Param('uuid') userId: string,
       
       ):Promise<Task>{
       return this.tasksService.CreateTask(createTaskDto, userId);

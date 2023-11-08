@@ -6,11 +6,7 @@ export class TaskDto {
     @MinLength(3)
     title: string;
     
-    @IsNotEmpty()
     description: string;
-
-    @IsEnum(TaskStatus)
-    status: TaskStatus;
 }
 export class UpdateTaskDto{
     
