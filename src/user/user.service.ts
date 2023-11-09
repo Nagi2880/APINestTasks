@@ -21,4 +21,16 @@ export class UserService {
   async GetAllUsers():Promise<User[]>{
     return this.userModel.find().exec();
   }
+
+  async DeleteUser(userUuid: string): Promise<any>{
+    try {
+      const deleteUser = await this.userModel.findOneAndDelete({ uuid: userUuid });
+      if (!deleteUser) {
+        throw new Error('No se encontró ningun usuario con el UUID proporcionado');
+      }
+      return { message: 'Usuerio eliminada exitosamente' };
+    } catch (error) {
+      throw new Error('Hubo un error al intentar eliminar el usuario');
+    }
+  }
 }

@@ -21,7 +21,7 @@ export class TasksController {
       ):Promise<Task>{
       return this.tasksService.CreateTask(createTaskDto, userId);
   }
-  @Delete(':uuid')
+  @Delete('/tasks/:uuid')
     async DeleteTask(@Param('uuid') uuid: string){
       return this.tasksService.DeleteTask(uuid)
   }
